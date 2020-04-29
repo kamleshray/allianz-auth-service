@@ -2,6 +2,7 @@ package com.allianz.utils.auth.controller;
 
 import com.allianz.utils.auth.model.AuthToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +21,12 @@ public class TokenController {
     private JwtUtil jwtGenerator;
 
     @PostMapping("/generate")
-    public String generate(@RequestBody final JwtUser jwtUser) {
-        return jwtGenerator.generate(jwtUser);
+    public ResponseEntity<String> generate(@RequestBody final JwtUser jwtUser) {
+        return ResponseEntity.ok(jwtGenerator.generate(jwtUser));
     }
 
     @PostMapping("/validate")
-    public boolean validate(@RequestBody final AuthToken token) {
-        return jwtGenerator.validate(token.getToken()) != null;
+    public ResponseEntity<Boolean> validate(@RequestBody final AuthToken token) {
+        return ResponseEntity.ok(jwtGenerator.validate(token.getToken()) != null);
     }
 }
